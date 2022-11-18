@@ -10,14 +10,14 @@ const useStyles = makeStyles({
     justifyContent: 'center',
   },
   leftDiv: {
-    width: '50%',
+    width: '30%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
     height: '100%',
   },
   rightDiv: {
-    width: '50%',
+    width: '70%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',

@@ -77,7 +77,7 @@ function Home() {
           </h1> */}
           <p className={classes.desc}>
             A smart tool to create various types of polls and quizes and
-            generate a small link to share it with participants. Admin
+            easily generate a small link to share it with participants. Admin
             dashboards supports realtime interective charts for better
             understanding of participants.
           </p>
