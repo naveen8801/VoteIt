@@ -52,21 +52,26 @@ function Home() {
     <Page title="Home">
       <div className={classes.root}>
         <div className={classes.leftDiv}>
-          <ReactTypingEffect
-            speed="300"
-            eraseSpeed="250"
-            eraseDelay="1000"
-            text={['Vote:It']}
-            cursorRenderer={(cursor) => <h1>{cursor}</h1>}
-            displayTextRenderer={(text, i) => {
-              return (
-                <h1 className={classes.h1}>
-                  {text.split(':')[0]}{' '}
-                  <span className={classes.span}>{text.split(':')[1]}</span>
-                </h1>
-              );
-            }}
-          />
+          <div style={{ minHeight: '250px' }}>
+            <ReactTypingEffect
+              typingDelay="100"
+              cursor="_"
+              speed="300"
+              eraseSpeed="250"
+              eraseDelay="3000"
+              text={['Vote:It']}
+              cursorRenderer={(cursor) => <h1>{cursor}</h1>}
+              displayTextRenderer={(text, i) => {
+                return (
+                  <h1 className={classes.h1}>
+                    {text.split(':')[0]}{' '}
+                    <span className={classes.span}>{text.split(':')[1]}</span>
+                  </h1>
+                );
+              }}
+            />
+          </div>
+
           {/* <h1 className={classes.h1}>
             Vote <span className={classes.span}>It</span>
           </h1> */}
