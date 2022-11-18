@@ -64,7 +64,7 @@ function NavBar() {
       </div>
       <div className={classes.rightDiv}>
         <ul className={classes.NavUi}>
-          <li className={classes.Li} onClick={(e) => navigate('/home')}>
+          <li className={classes.Li} onClick={(e) => navigate('/')}>
             Home
           </li>
           <li className={classes.Li} onClick={(e) => navigate('/about-us')}>
