@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { useNavigate } from 'react-router';
 
 const useStyles = makeStyles({
   root: {
@@ -53,6 +54,7 @@ const useStyles = makeStyles({
 
 function NavBar() {
   const classes = useStyles();
+  const navigate = useNavigate();
   return (
     <div className={classes.root}>
       <div className={classes.leftDiv}>
@@ -62,10 +64,21 @@ function NavBar() {
       </div>
       <div className={classes.rightDiv}>
         <ul className={classes.NavUi}>
-          <li className={classes.Li}>Home</li>
-          <li className={classes.Li}>Contact Us</li>
-          <li className={classes.Li}>Login</li>
-          <li className={classes.Li}>Sign Up</li>
+          <li className={classes.Li} onClick={(e) => navigate('/home')}>
+            Home
+          </li>
+          <li className={classes.Li} onClick={(e) => navigate('/about-us')}>
+            About Us
+          </li>
+          <li className={classes.Li} onClick={(e) => navigate('/contact-us')}>
+            Contact Us
+          </li>
+          <li className={classes.Li} onClick={(e) => navigate('/sign-in')}>
+            Login
+          </li>
+          <li className={classes.Li} onClick={(e) => navigate('/sign-up')}>
+            Sign Up
+          </li>
         </ul>
       </div>
     </div>
