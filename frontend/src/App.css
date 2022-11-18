@@ -1,6 +1,7 @@
 .App {
   margin: 0;
   padding: 0;
+  background-color: #100b29;
 }
 
 @media (prefers-reduced-motion: no-preference) {
