@@ -74,7 +74,7 @@ function NavBar() {
             Contact Us
           </li>
           <li className={classes.Li} onClick={(e) => navigate('/sign-in')}>
-            Login
+            Sign In
           </li>
           <li className={classes.Li} onClick={(e) => navigate('/sign-up')}>
             Sign Up
