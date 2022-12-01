@@ -4,20 +4,18 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const colors = require('colors');
 const morgan = require('morgan');
-const connectDB = require('./config/db');
+const connectDB = require('./db');
 const errorHandler = require('./middleware/error');
 const cookieParser = require('cookie-parser');
 
 // Loading Env Vars
-dotenv.config({ path: '/.env' });
+dotenv.config({ path: '.env' });
 
 // Connect to Database
 connectDB();
 
 //============================ Route Files ===========================//
-const auth = require('./routes/auth');
-const profile = require('./routes/profile');
-const post = require('./routes/post');
+// const auth = require('./routes/auth');
 
 // Initialising Express Constructor
 const app = express();
@@ -35,9 +33,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // ================Mount routes=====================
-app.use('/api/v1/auth', auth);
-app.use('/api/v1/profile', profile);
-app.use('/api/v1/posts', post);
+// app.use('/api/v1/auth', auth);
 
 // =================================================
 
