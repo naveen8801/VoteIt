@@ -13,6 +13,7 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'auto',
   },
   card: {
     width: '30%',
@@ -121,7 +122,7 @@ function SignUp() {
               className={classes.input}
             />
             <Button onClick={() => handleSubmit()} className={classes.btn}>
-              Sign In
+              Sign Up
             </Button>
           </div>
         </div>

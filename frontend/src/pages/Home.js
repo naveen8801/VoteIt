@@ -11,6 +11,7 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'auto',
   },
   leftDiv: {
     width: '50%',
@@ -76,8 +77,8 @@ function Home() {
             Vote <span className={classes.span}>It</span>
           </h1> */}
           <p className={classes.desc}>
-            A smart tool to create various types of polls and quizes and
-            easily generate a small link to share it with participants. Admin
+            A smart tool to create various types of polls and quizes and easily
+            generate a small link to share it with participants. Admin
             dashboards supports realtime interective charts for better
             understanding of participants.
           </p>

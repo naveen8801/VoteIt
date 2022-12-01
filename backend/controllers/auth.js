@@ -20,7 +20,7 @@ exports.handleLogin = asyncHandler(async (req, res, next) => {
     }
     sendTokenResponse(user, 200, res);
   } catch (error) {
-    return next(new ErrorResponse('Network Error', 500));
+    return next(error);
   }
 });
 
@@ -35,7 +35,8 @@ exports.handleRegister = asyncHandler(async (req, res, next) => {
     user.save({ validateBeforeSave: false });
     sendTokenResponse(user, 200, res);
   } catch (error) {
-    return next(new ErrorResponse(error));
+    console.log(error);
+    return next(error);
   }
 });
 

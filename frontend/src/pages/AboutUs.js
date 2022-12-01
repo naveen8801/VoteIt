@@ -12,6 +12,7 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'auto',
   },
   leftDiv: {
     width: '50%',
