@@ -41,12 +41,13 @@ const useStyles = makeStyles({
     padding: '0 0.4rem',
   },
   btn: {
+    color: 'white',
     margin: '0.5rem 0',
     height: '40px',
     borderRadius: '6px',
-    backgroundColor: '#3F51B5',
+    backgroundColor: '#cb19cd',
     textTransform: 'none',
-    '&:hover': { backgroundColor: '#3F51B5' },
+    '&:hover': { backgroundColor: '#cb19cd' },
   },
 });
 
