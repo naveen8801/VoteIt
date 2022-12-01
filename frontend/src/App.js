@@ -6,10 +6,24 @@ import Home from './pages/Home';
 import NavBar from './components/NavBar';
 import AboutUs from './pages/AboutUs';
 import SignUp from './pages/SignUp';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <div className="App">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <NavBar />
       <Routes>
         <Route exact path="/" element={<Home />} />

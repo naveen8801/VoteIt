@@ -20,25 +20,22 @@ exports.handleLogin = asyncHandler(async (req, res, next) => {
     }
     sendTokenResponse(user, 200, res);
   } catch (error) {
-    console.log(error);
     return next(new ErrorResponse('Network Error', 500));
   }
 });
 
 exports.handleRegister = asyncHandler(async (req, res, next) => {
-  const { username, email, password, role } = req.body;
+  const { name, email, password } = req.body;
   try {
     const user = await User.create({
-      username,
+      name,
       email,
       password,
-      role,
     });
     user.save({ validateBeforeSave: false });
     sendTokenResponse(user, 200, res);
   } catch (error) {
-    console.log(error);
-    return next(new ErrorResponse('Network Error', 500));
+    return next(new ErrorResponse(error));
   }
 });
 
@@ -52,10 +49,7 @@ const sendTokenResponse = (user, statusCode, res) => {
   if (process.env.NODE_ENV === 'productions') {
     options.secure = true;
   }
-  res
-    .status(statusCode)
-    .cookie('token', token, options)
-    .json({
-      data: { token: token },
-    });
+  res.status(statusCode).cookie('token', token, options).json({
+    token: token,
+  });
 };

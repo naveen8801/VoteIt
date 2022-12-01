@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Page from '../utils/Page';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Card, OutlinedInput, TextField } from '@material-ui/core';
+import { toast } from 'react-toastify';
+import { getErrorMessage } from '../utils/helpers';
+import { login } from '../api/api';
 
 const useStyles = makeStyles({
   root: {
@@ -53,15 +56,57 @@ const useStyles = makeStyles({
 
 function SignIn() {
   const classes = useStyles();
+  const [signInData, setSignInData] = useState({ email: '', password: '' });
+
+  const handleSubmit = async () => {
+    if (signInData.email.trim().length === 0) {
+      toast.error('Email is required !');
+      return;
+    }
+    if (signInData.password.trim().length === 0) {
+      toast.error('Password is required !');
+      return;
+    }
+
+    const payload = signInData;
+
+    try {
+      const { data } = await login(payload);
+      if (data.token) {
+        localStorage.setItem('vote-it-token', data?.token);
+        toast.success('Sign In Successfull 🚀');
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(getErrorMessage(err));
+    }
+  };
+
   return (
     <Page title="Sign In">
       <div className={classes.root}>
         <div className={classes.card}>
           <h1 className={classes.heading}>Sign In</h1>
           <div className={classes.formWrapper}>
-            <input placeholder="Name" type="text" className={classes.input} />
-            <input placeholder="Email" type="text" className={classes.input} />
-            <Button className={classes.btn}>Sign In</Button>
+            <input
+              onChange={(e) =>
+                setSignInData({ ...signInData, email: e.target.value })
+              }
+              placeholder="Email"
+              type="text"
+              className={classes.input}
+            />
+            <input
+              onChange={(e) =>
+                setSignInData({ ...signInData, password: e.target.value })
+              }
+              placeholder="Password"
+              type="password"
+              className={classes.input}
+            />
+            <Button onClick={() => handleSubmit()} className={classes.btn}>
+              Sign In
+            </Button>
           </div>
         </div>
       </div>

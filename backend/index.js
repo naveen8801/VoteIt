@@ -6,7 +6,6 @@ const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./db');
 const errorHandler = require('./middleware/error');
-const cookieParser = require('cookie-parser');
 
 // Loading Env Vars
 dotenv.config({ path: '.env' });
@@ -19,6 +18,9 @@ const auth = require('./routes/auth');
 
 // Initialising Express Constructor
 const app = express();
+
+// Cors Middleware
+app.use(cors());
 
 // Body Parser
 app.use(express.json({ extended: false }));
