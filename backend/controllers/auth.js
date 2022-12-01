@@ -3,6 +3,8 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const User = require('../models/User');
 
+const maxage = 3 * 24 * 60 * 60;
+
 exports.handleLogin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -19,6 +21,7 @@ exports.handleLogin = asyncHandler(async (req, res, next) => {
     }
     sendTokenResponse(user, 200, res);
   } catch (error) {
+    console.log(error);
     res.status(500).json({
       error: 'Failed',
     });
@@ -37,7 +40,7 @@ exports.handleRegister = asyncHandler(async (req, res, next) => {
     user.save({ validateBeforeSave: false });
     sendTokenResponse(user, 200, res);
   } catch (error) {
-    console.log(err);
+    console.log(error);
     res.status(500).json({
       error: 'Failed',
     });
@@ -46,18 +49,18 @@ exports.handleRegister = asyncHandler(async (req, res, next) => {
 
 // Get token from model and create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
-  const token = user.getSignedJwtToken();
+  const token = user.getSignedJwtToken(maxage);
   const options = {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
-    ),
+    expiresIn: maxage,
     httpOnly: true,
   };
   if (process.env.NODE_ENV === 'productions') {
     options.secure = true;
   }
-  res.status(statusCode).cookie('token', token, options).json({
-    success: true,
-    token,
-  });
+  res
+    .status(statusCode)
+    .cookie('token', token, options)
+    .json({
+      data: { token: token },
+    });
 };
