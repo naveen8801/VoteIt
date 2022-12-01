@@ -1,9 +1,8 @@
-const crypto = require('crypto');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const User = require('../models/User');
 
-const maxage = 3 * 24 * 60 * 60;
+const maxage = 1 * 24 * 60 * 60;
 
 exports.handleLogin = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
@@ -22,9 +21,7 @@ exports.handleLogin = asyncHandler(async (req, res, next) => {
     sendTokenResponse(user, 200, res);
   } catch (error) {
     console.log(error);
-    res.status(500).json({
-      error: 'Failed',
-    });
+    return next(new ErrorResponse('Network Error', 500));
   }
 });
 
@@ -41,9 +38,7 @@ exports.handleRegister = asyncHandler(async (req, res, next) => {
     sendTokenResponse(user, 200, res);
   } catch (error) {
     console.log(error);
-    res.status(500).json({
-      error: 'Failed',
-    });
+    return next(new ErrorResponse('Network Error', 500));
   }
 });
 
