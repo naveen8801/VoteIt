@@ -58,14 +58,18 @@ const useStyles = makeStyles({
 function SignIn() {
   const classes = useStyles();
   const [signInData, setSignInData] = useState({ email: '', password: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     if (signInData.email.trim().length === 0) {
       toast.error('Email is required !');
+      setIsLoading(false);
       return;
     }
     if (signInData.password.trim().length === 0) {
       toast.error('Password is required !');
+      setIsLoading(false);
       return;
     }
 
@@ -81,6 +85,7 @@ function SignIn() {
       console.log(err);
       toast.error(getErrorMessage(err));
     }
+    setIsLoading(false);
   };
 
   return (
@@ -105,7 +110,11 @@ function SignIn() {
               type="password"
               className={classes.input}
             />
-            <Button onClick={() => handleSubmit()} className={classes.btn}>
+            <Button
+              disabled={isLoading}
+              onClick={() => handleSubmit()}
+              className={classes.btn}
+            >
               Sign In
             </Button>
           </div>

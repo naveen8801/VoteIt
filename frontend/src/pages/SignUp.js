@@ -62,18 +62,23 @@ function SignUp() {
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     if (signUpData.email.trim().length === 0) {
       toast.error('Email is required !');
+      setIsLoading(false);
       return;
     }
     if (signUpData.password.trim().length === 0) {
       toast.error('Password is required !');
+      setIsLoading(false);
       return;
     }
     if (signUpData.name.trim().length === 0) {
       toast.error('Name is required !');
+      setIsLoading(false);
       return;
     }
 
@@ -89,6 +94,7 @@ function SignUp() {
       console.log(err);
       toast.error(getErrorMessage(err));
     }
+    setIsLoading(false);
   };
 
   return (
@@ -121,7 +127,11 @@ function SignUp() {
               type="password"
               className={classes.input}
             />
-            <Button onClick={() => handleSubmit()} className={classes.btn}>
+            <Button
+              disabled={isLoading}
+              onClick={() => handleSubmit()}
+              className={classes.btn}
+            >
               Sign Up
             </Button>
           </div>
