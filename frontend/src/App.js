@@ -8,8 +8,20 @@ import AboutUs from './pages/AboutUs';
 import SignUp from './pages/SignUp';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useDispatch } from 'react-redux';
+import { getUser } from './action/index';
+import { useEffect } from 'react';
 
 function App() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    async function doVerifyUser() {
+      dispatch(getUser());
+    }
+
+    doVerifyUser();
+  }, []);
+
   return (
     <div className="App">
       <ToastContainer

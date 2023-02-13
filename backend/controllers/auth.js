@@ -40,6 +40,10 @@ exports.handleRegister = asyncHandler(async (req, res, next) => {
   }
 });
 
+exports.handleGetUser = async (req, res, next) => {
+  return res.status(200).json({ data: req.user });
+};
+
 // Get token from model and create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   const token = user.getSignedJwtToken(maxage);

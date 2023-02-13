@@ -7,6 +7,11 @@ export const server = axios.create({
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    authorization: `${
+      localStorage.getItem('vote-it-token')
+        ? 'Bearer ' + localStorage.getItem('vote-it-token')
+        : ''
+    }`,
   },
 });
 
@@ -14,3 +19,5 @@ export const login = (data) => server.post(`${url}/api/v1/auth/login`, data);
 
 export const register = (data) =>
   server.post(`${url}/api/v1/auth/register`, data);
+
+export const verifyUser = () => server.get(`${url}/api/v1/auth/user`);
