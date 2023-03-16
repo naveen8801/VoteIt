@@ -41,7 +41,14 @@ exports.handleRegister = asyncHandler(async (req, res, next) => {
 });
 
 exports.handleGetUser = async (req, res, next) => {
-  return res.status(200).json({ data: req.user });
+  return res.status(200).json({
+    data: {
+      _id: req?.user?._id,
+      name: req?.user?.name,
+      email: req?.user?.email,
+      createdAt: req?.user?.createdAt,
+    },
+  });
 };
 
 // Get token from model and create cookie and send response
@@ -54,7 +61,16 @@ const sendTokenResponse = (user, statusCode, res) => {
   if (process.env.NODE_ENV === 'productions') {
     options.secure = true;
   }
-  res.status(statusCode).cookie('token', token, options).json({
-    token: token,
-  });
+  res
+    .status(statusCode)
+    .cookie('token', token, options)
+    .json({
+      token: token,
+      data: {
+        _id: user?._id,
+        name: user?.name,
+        email: user?.email,
+        createdAt: user?.createdAt,
+      },
+    });
 };

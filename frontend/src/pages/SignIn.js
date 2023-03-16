@@ -5,6 +5,8 @@ import { Button, Card, OutlinedInput, TextField } from '@material-ui/core';
 import { toast } from 'react-toastify';
 import { getErrorMessage } from '../utils/helpers';
 import { login } from '../api/api';
+import { useDispatch } from 'react-redux';
+import { setLogin, setUser } from '../action';
 
 const useStyles = makeStyles({
   root: {
@@ -56,6 +58,7 @@ const useStyles = makeStyles({
 });
 
 function SignIn() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [signInData, setSignInData] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -79,7 +82,11 @@ function SignIn() {
       const { data } = await login(payload);
       if (data.token) {
         localStorage.setItem('vote-it-token', data?.token);
+        dispatch(setLogin());
         toast.success('Sign In Successfull 🚀');
+      }
+      if (data.data) {
+        dispatch(setUser(data?.data));
       }
     } catch (err) {
       console.log(err);

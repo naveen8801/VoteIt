@@ -5,6 +5,8 @@ import { Button } from '@material-ui/core';
 import { register } from '../api/api';
 import { toast } from 'react-toastify';
 import { getErrorMessage } from '../utils/helpers';
+import { useDispatch } from 'react-redux';
+import { setLogin, setUser } from '../action';
 
 const useStyles = makeStyles({
   root: {
@@ -56,6 +58,7 @@ const useStyles = makeStyles({
 });
 
 function SignUp() {
+  const dispatch = useDispatch();
   const classes = useStyles();
   const [signUpData, setSignUpData] = useState({
     name: '',
@@ -88,7 +91,11 @@ function SignUp() {
       const { data } = await register(payload);
       if (data.token) {
         localStorage.setItem('vote-it-token', data?.token);
+        dispatch(setLogin());
         toast.success('Sign Up Successfull 🚀');
+      }
+      if (data.data) {
+        dispatch(setUser(data?.data));
       }
     } catch (err) {
       console.log(err);
