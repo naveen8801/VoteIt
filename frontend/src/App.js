@@ -8,15 +8,14 @@ import AboutUs from './pages/AboutUs';
 import SignUp from './pages/SignUp';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getUser, setMainLoading } from './action/index';
 import { useEffect } from 'react';
-import loadingVector from './assets/loading-vector.svg';
+import { connect } from 'react-redux';
 
-function App() {
+function App({ user, isLogin, mainLoading }) {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  console.log(state);
+  console.log(isLogin);
   useEffect(() => {
     dispatch(setMainLoading(true));
     async function doVerifyUser() {
@@ -39,13 +38,13 @@ function App() {
         pauseOnHover
         theme="dark"
       />
-      <NavBar />
-      {state?.mainLoading ? (
+      {mainLoading ? (
         <div className="loading-banner">
           <h1>Loading...</h1>{' '}
         </div>
       ) : (
         <>
+          <NavBar />
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/about-us" element={<AboutUs />} />
@@ -59,4 +58,12 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    user: state?.user,
+    isLogin: state?.isLogin,
+    mainLoading: state?.mainLoading,
+  };
+};
+
+export default connect(mapStateToProps)(App);

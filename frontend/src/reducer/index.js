@@ -1,7 +1,7 @@
 const initialState = {
   user: null,
   isLogin: false,
-  mainLoading: false,
+  mainLoading: true,
 };
 
 const reducer = (state = initialState, action) => {

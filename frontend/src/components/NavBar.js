@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
   root: {
@@ -52,7 +53,7 @@ const useStyles = makeStyles({
   },
 });
 
-function NavBar() {
+function NavBar({ user, isLogin, mainLoading }) {
   const classes = useStyles();
   const navigate = useNavigate();
   return (
@@ -73,16 +74,33 @@ function NavBar() {
           <li className={classes.Li} onClick={(e) => navigate('/contact-us')}>
             Contact Us
           </li>
-          <li className={classes.Li} onClick={(e) => navigate('/sign-in')}>
-            Sign In
-          </li>
-          <li className={classes.Li} onClick={(e) => navigate('/sign-up')}>
-            Sign Up
-          </li>
+          {!isLogin && (
+            <>
+              <li className={classes.Li} onClick={(e) => navigate('/sign-in')}>
+                Sign In
+              </li>
+              <li className={classes.Li} onClick={(e) => navigate('/sign-up')}>
+                Sign Up
+              </li>
+            </>
+          )}
+          {isLogin && (
+            <li className={classes.Li} onClick={(e) => navigate('/sign-up')}>
+              Logout
+            </li>
+          )}
         </ul>
       </div>
     </div>
   );
 }
 
-export default NavBar;
+const mapStateToProps = (state) => {
+  return {
+    user: state?.user,
+    isLogin: state?.isLogin,
+    mainLoading: state?.mainLoading,
+  };
+};
+
+export default connect(mapStateToProps)(NavBar);
