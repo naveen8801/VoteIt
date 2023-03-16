@@ -31,6 +31,9 @@ export const setLogin = () => {
 };
 
 export const setLogout = () => {
+  if (localStorage.getItem('vote-it-token')) {
+    localStorage.removeItem('vote-it-token');
+  }
   return {
     type: 'LOGOUT',
   };

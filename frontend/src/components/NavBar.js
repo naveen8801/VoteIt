@@ -2,6 +2,8 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router';
 import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setLogout } from '../action';
 
 const useStyles = makeStyles({
   root: {
@@ -55,6 +57,7 @@ const useStyles = makeStyles({
 
 function NavBar({ user, isLogin, mainLoading }) {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   return (
     <div className={classes.root}>
@@ -85,7 +88,7 @@ function NavBar({ user, isLogin, mainLoading }) {
             </>
           )}
           {isLogin && (
-            <li className={classes.Li} onClick={(e) => navigate('/sign-up')}>
+            <li className={classes.Li} onClick={(e) => dispatch(setLogout())}>
               Logout
             </li>
           )}
