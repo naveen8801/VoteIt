@@ -2,6 +2,7 @@ import { verifyUser } from '../api/api';
 
 export const getUser = () => {
   return async (dispatch, getState) => {
+    dispatch(setMainLoading(true));
     try {
       const { data } = await verifyUser();
       if (data?.data) {
@@ -12,6 +13,7 @@ export const getUser = () => {
       console.log(err);
       await dispatch(setLogout());
     }
+    dispatch(setMainLoading(false));
   };
 };
 
@@ -31,5 +33,12 @@ export const setLogin = () => {
 export const setLogout = () => {
   return {
     type: 'LOGOUT',
+  };
+};
+
+export const setMainLoading = (loading) => {
+  return {
+    type: 'MAIN_LOADING',
+    loading,
   };
 };

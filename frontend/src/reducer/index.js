@@ -1,6 +1,7 @@
 const initialState = {
   user: null,
   isLogin: false,
+  mainLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -11,6 +12,8 @@ const reducer = (state = initialState, action) => {
       return { ...state, user: null, isLogin: false };
     case 'LOGIN':
       return { ...state, isLogin: true };
+    case 'MAIN_LOADING':
+      return { ...state, mainLoading: action.loading };
   }
 };
 
