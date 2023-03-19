@@ -6,6 +6,7 @@ const colors = require('colors');
 const morgan = require('morgan');
 const connectDB = require('./db');
 const errorHandler = require('./middleware/error');
+const http = require('http');
 
 // Loading Env Vars
 dotenv.config({ path: '.env' });
@@ -18,6 +19,14 @@ const auth = require('./routes/auth');
 
 // Initialising Express Constructor
 const app = express();
+const server = http.createServer(app);
+const { Server } = require('socket.io');
+const io = new Server(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST'],
+  },
+});
 
 // Cors Middleware
 app.use(cors());
@@ -44,7 +53,16 @@ app.use('/api/v1/auth', auth);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-const server = app.listen(
+
+//Socket.io Controllers
+io.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+  });
+});
+
+const server_ = server.listen(
   PORT,
   console.log(
     `Server running in ${process.env.NODE_ENV} mode on port ${PORT}`.yellow.bold
@@ -55,5 +73,5 @@ const server = app.listen(
 process.on('unhandledRejection', (err) => {
   console.log(`Error : ${err.message}`);
   // Close Server & Exit process
-  server.close(() => process.exit(1));
+  server_.close(() => process.exit(1));
 });

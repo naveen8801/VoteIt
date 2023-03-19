@@ -15,14 +15,14 @@ import { connect } from 'react-redux';
 
 function App({ user, isLogin, mainLoading }) {
   const dispatch = useDispatch();
-  console.log(isLogin);
+  // console.log(isLogin);
   useEffect(() => {
     dispatch(setMainLoading(true));
     async function doVerifyUser() {
       dispatch(getUser());
     }
     doVerifyUser();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="App">
