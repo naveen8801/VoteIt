@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useNavigate } from 'react-router';
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { setLogout } from '../action';
+import { Menu, MenuItem, Button } from '@material-ui/core';
+import { ChevronDown, ChevronUp } from 'react-feather';
 
 const useStyles = makeStyles({
   root: {
@@ -59,6 +61,14 @@ function NavBar({ user, isLogin, mainLoading }) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <div className={classes.root}>
       <div className={classes.leftDiv}>
@@ -88,11 +98,40 @@ function NavBar({ user, isLogin, mainLoading }) {
             </>
           )}
           {isLogin && (
-            <li className={classes.Li} onClick={(e) => dispatch(setLogout())}>
-              Logout
+            <li
+              style={{ display: 'flex' }}
+              className={`${classes.Li}`}
+              onClick={handleClick}
+            >
+              Hey {user?.name}
+              {open ? <ChevronUp /> : <ChevronDown />}
             </li>
           )}
         </ul>
+        <Menu
+          id="basic-menu"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}
+          getContentAnchorEl={null}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+          transformOrigin={{ vertical: 'top', horizontal: 'center' }}
+        >
+          <MenuItem disabled onClick={handleClose}>
+            Profile
+          </MenuItem>
+          <MenuItem
+            onClick={(e) => {
+              dispatch(setLogout());
+              handleClose();
+            }}
+          >
+            Logout
+          </MenuItem>
+        </Menu>
       </div>
     </div>
   );
