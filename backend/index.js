@@ -15,7 +15,8 @@ dotenv.config({ path: '.env' });
 connectDB();
 
 //============================ Route Files ===========================//
-const auth = require('./routes/auth');
+const auth = require('./routes/Auth');
+const resource = require('./routes/Resource');
 
 // Initialising Express Constructor
 const app = express();
@@ -45,6 +46,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // ================Mount routes=====================
 app.use('/api/v1/auth', auth);
+app.use('/api/v1/resource', resource);
 
 // =================================================
 

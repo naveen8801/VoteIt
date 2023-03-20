@@ -1,11 +1,11 @@
 const moment = require('moment');
 
-exports.getExpirationDate = (date) => {
-  if (date > 30) {
+exports.getExpirationDate = (days) => {
+  if (days > 30) {
     const afterDays = moment().add(3, 'days');
-    return moment(today).valueOf();
+    return moment(afterDays).valueOf();
   } else {
-    const afterDays = moment().add(date, 'days');
-    return moment(today).valueOf();
+    const afterDays = moment().add(days, 'days');
+    return moment(afterDays).valueOf();
   }
 };

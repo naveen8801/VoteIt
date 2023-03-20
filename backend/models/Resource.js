@@ -41,6 +41,16 @@ const ResourceSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  author: {
+    email: {
+      type: String,
+      required: [true, 'Author email is required'],
+    },
+    name: {
+      type: String,
+      required: [true, 'Author name is required'],
+    },
+  },
 });
 
 module.exports = mongoose.model('Resources', ResourceSchema);

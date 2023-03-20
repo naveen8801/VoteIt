@@ -27,6 +27,22 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: Date.now(),
   },
+  resources: [
+    {
+      title: {
+        type: String,
+        required: [true, 'Resource title required'],
+      },
+      resourceID: {
+        type: String,
+        required: [true, 'Resource Id required'],
+      },
+      createdAt: {
+        type: Number,
+        required: [true, 'Resource createdAt required'],
+      },
+    },
+  ],
 });
 
 // Encrypt Password using bcrypt
