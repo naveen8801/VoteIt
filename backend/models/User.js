@@ -33,8 +33,8 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Resource title required'],
       },
-      resourceID: {
-        type: String,
+      resourceId: {
+        type: mongoose.SchemaTypes.ObjectId,
         required: [true, 'Resource Id required'],
       },
       createdAt: {

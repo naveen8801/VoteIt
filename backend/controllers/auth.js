@@ -41,6 +41,8 @@ exports.handleRegister = asyncHandler(async (req, res, next) => {
 });
 
 exports.handleGetUser = async (req, res, next) => {
+  console.log(`INFO : User fetched successfully`);
+  console.log(`INFO : ${req?.user}`);
   return res.status(200).json({
     data: {
       _id: req?.user?._id,
