@@ -1,16 +1,16 @@
-const ErrorResponse = require('../utils/errorResponse');
-const asyncHandler = require('../middleware/async');
-const { getExpirationDate } = require('../utils/helpers');
-const Resource = require('../models/Resource');
-const User = require('../models/User');
+const ErrorResponse = require("../utils/errorResponse");
+const asyncHandler = require("../middleware/async");
+const { getExpirationDate } = require("../utils/helpers");
+const Resource = require("../models/Resource");
+const User = require("../models/User");
 
 exports.handleGetResource = asyncHandler(async (req, res, next) => {
-  let resourceId = req.params['resourceId'];
+  let resourceId = req.params["resourceId"];
   try {
     const resource = await Resource.findById(resourceId);
     if (!resource) {
       res.status(404).json({
-        msg: 'No resource found with this id',
+        msg: "No resource found with this id",
       });
     }
     res.status(200).json({
@@ -45,7 +45,7 @@ exports.handleCreateResource = asyncHandler(async (req, res, next) => {
       resource
         .save({ validateBeforeSave: false })
         .then(async (data) => {
-          console.log('INFO : Resource Created Successfully');
+          console.log("INFO : Resource Created Successfully");
           console.log(`INFO : ${data}`);
           let currUser = await User.findById(userData?._id);
           let userResources = currUser?.resources || [];
@@ -62,13 +62,13 @@ exports.handleCreateResource = asyncHandler(async (req, res, next) => {
               if (err) {
                 console.log(`ERROR : ${err}`);
                 res.status(403).json({
-                  msg: 'User not updated after resource creation',
+                  msg: "User not updated after resource creation",
                 });
               } else {
                 console.log(`INFO : User updated successfully`);
                 console.log(`INFO : ${docs}`);
                 res.status(200).json({
-                  msg: 'Resource created successfully',
+                  msg: "Resource created successfully",
                 });
               }
             }
@@ -77,12 +77,12 @@ exports.handleCreateResource = asyncHandler(async (req, res, next) => {
         .catch((err) => {
           console.log(err);
           res.status(403).json({
-            msg: 'Resource creation failed',
+            msg: "Resource creation failed",
           });
         });
     } else {
       res.status(403).json({
-        msg: 'Resource data validation failed',
+        msg: "Resource data validation failed",
         data: validationResult?.errors,
       });
     }
@@ -93,7 +93,30 @@ exports.handleCreateResource = asyncHandler(async (req, res, next) => {
 
 exports.handleUpdateResource = asyncHandler(async (req, res, next) => {});
 
-exports.handleDeleteResource = asyncHandler(async (req, res, next) => {});
+exports.handleDeleteResource = asyncHandler(async (req, res, next) => {
+  let resourcId = req?.body?.resourceId;
+  try {
+    const resource = await Resource.findByIdAndUpdate(resourcId, {
+      isArchived: true,
+      function(err, docs) {
+        if (err) {
+          console.log(`ERROR : ${err}`);
+          res.status(403).json({
+            msg: "Resource not archieved",
+          });
+        } else {
+          console.log(`INFO : Resource archieved successfully`);
+          console.log(`INFO : ${docs}`);
+          res.status(200).json({
+            msg: "Resource archieved successfully",
+          });
+        }
+      },
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 // Validation function
 const validateResourceData = (resourceData) => {
@@ -108,17 +131,17 @@ const validateResourceData = (resourceData) => {
     resourceData?.title?.trim().length > 200
   ) {
     result.errors.push(
-      'Title must be a valid string having maximum of 200 characters'
+      "Title must be a valid string having maximum of 200 characters"
     );
   }
 
   if (
     !resourceData?.config ||
     !resourceData.config.encodedData ||
-    typeof resourceData.config.encodedData !== 'string'
+    typeof resourceData.config.encodedData !== "string"
   ) {
     result.errors.push(
-      'Resource data is required and should have a valid string'
+      "Resource data is required and should have a valid string"
     );
   }
 
