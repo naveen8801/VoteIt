@@ -1,25 +1,44 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const crypto = require("crypto");
+
+// Subschema for resources
+var resourcesSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: [true, "Resource title required"],
+    },
+    resourceId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      required: [true, "Resource Id required"],
+    },
+    createdAt: {
+      type: Number,
+      required: [true, "Resource createdAt required"],
+    },
+  },
+  { _id: false }
+);
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please add a First name'],
+    required: [true, "Please add a First name"],
   },
   email: {
     type: String,
-    required: [true, 'Please add an email'],
+    required: [true, "Please add an email"],
     unique: true,
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-      'Please add a valid email',
+      "Please add a valid email",
     ],
   },
   password: {
     type: String,
-    required: [true, 'Please add a password'],
+    required: [true, "Please add a password"],
     minlength: 6,
     select: false,
   },
@@ -27,27 +46,12 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: Date.now(),
   },
-  resources: [
-    {
-      title: {
-        type: String,
-        required: [true, 'Resource title required'],
-      },
-      resourceId: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: [true, 'Resource Id required'],
-      },
-      createdAt: {
-        type: Number,
-        required: [true, 'Resource createdAt required'],
-      },
-    },
-  ],
+  resources: [resourcesSchema],
 });
 
 // Encrypt Password using bcrypt
-UserSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) {
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
@@ -66,4 +70,4 @@ UserSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model("user", UserSchema);
