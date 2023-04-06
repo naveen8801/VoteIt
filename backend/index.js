@@ -54,7 +54,7 @@ app.use('/api/v1/resource', resource);
 // errors otherwise)
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 //Socket.io Controllers
 io.on('connection', (socket) => {

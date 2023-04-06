@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const url =
-  process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5000';
+  process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:8000';
 
 export const server = axios.create({
   baseURL: url,

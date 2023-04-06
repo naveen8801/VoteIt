@@ -68,7 +68,7 @@ function AboutUs() {
           <p className={classes.desc}>
             We are young team of passionate and hardworking individauls. Always
             trying to make things easirer and effective for rest of the world.
-            Feel free tu contribute to this project 🚀
+            Feel free to contribute to this project🚀
           </p>
           <div className={classes.iconWraper}>
             <img
